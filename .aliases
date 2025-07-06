@@ -1,0 +1,5 @@
+
+# General Aliases
+alias ll='ls -lah'
+alias gs='git status'
+alias please='sudo $(fc -ln -1)'
