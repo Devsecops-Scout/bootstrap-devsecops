@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------
 # Description: GitLab CI/CD pipeline for DevSecOps bootstrap
 # Author: devsecops_scout
-# Last Updated: 2025-07-10
+# Last Updated: 2025-07-11
 # ------------------------------------------------------------------------
 
 image: ubuntu:24.04
