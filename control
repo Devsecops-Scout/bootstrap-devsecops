@@ -1,0 +1,10 @@
+Package: devsecops-bootstrap
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Jo <devsecopsscout@gmail.com>
+Description: Modular WSL DevSecOps workstation setup
+ Clean, secure, and production-ready configuration for developers and DevSecOps professionals using WSL environments. Includes Docker, ZSH, Kubernetes tools, dotfiles, and post-install validation.
+Depends: bash, curl, git, sudo, zsh, ca-certificates
+Homepage: https://www.bibiserv.com

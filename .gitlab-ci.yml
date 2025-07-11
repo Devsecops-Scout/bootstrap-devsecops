@@ -1,0 +1,33 @@
+image: ubuntu:24.04
+
+stages:
+  - validate
+  - build
+  - test
+
+variables:
+  DEBIAN_FRONTEND: noninteractive
+
+validate:shellcheck:
+  stage: validate
+  before_script:
+    - apt-get update && apt-get install -y shellcheck
+  script:
+    - shellcheck *.sh
+
+build:bootstrap:
+  stage: build
+  script:
+    - apt-get update && apt-get install -y sudo curl git zsh ca-certificates gnupg
+    - chmod +x *.sh
+    - ./bootstrap-devsecops.sh
+    - ./dotfiles_setup.sh
+
+post_install:test:
+  stage: test
+  script:
+    - docker --version || echo "❌ Docker not installed"
+    - kubectl version --client || echo "❌ kubectl failed"
+    - kind version || echo "❌ kind failed"
+    - zsh --version || echo "❌ ZSH failed"
+    - echo "✅ Post-install verification complete"

@@ -1,0 +1,28 @@
+# Makefile for DevSecOps Workstation Bootstrap
+
+INSTALL_SCRIPTS = bootstrap-devsecops.sh k8s-tools.sh dotfiles_setup.sh test-verify.sh
+PACKAGE_NAME = devsecops-bootstrap
+PACKAGE_VERSION = 1.0.0
+
+all: install
+
+install:
+	@echo "🔧 Running full installation..."
+	chmod +x $(INSTALL_SCRIPTS)
+	./bootstrap-devsecops.sh
+	./dotfiles_setup.sh
+	./test-verify.sh
+
+verify:
+	@echo "🔍 Running post-install verification..."
+	./test-verify.sh
+
+package:
+	@echo "📦 Creating tar.gz package..."
+	tar -czvf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(INSTALL_SCRIPTS) README.md .gitlab-ci.yml Makefile
+
+clean:
+	@echo "🧹 Cleaning up generated files..."
+	rm -f *.tar.gz
+
+.PHONY: all install verify package clean
