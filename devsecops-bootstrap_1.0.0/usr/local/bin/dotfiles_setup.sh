@@ -1,7 +1,9 @@
 #!/bin/bash
+# ------------------------------------------------------------------------
 # Dotfiles Setup Script for ZSH and DevSecOps Customization
 # Author: devsecops_scout
 # Last Updated: 2025-07-10
+# ------------------------------------------------------------------------
 
 set -euo pipefail
 
