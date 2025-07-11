@@ -1,5 +1,7 @@
 #!/bin/bash
 # Post-install verification for DevSecOps WSL setup
+# Author: devsecops_scout
+# Last Updated: 2025-07-10
 
 set -e
 
