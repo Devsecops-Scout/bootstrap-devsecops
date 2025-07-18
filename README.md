@@ -109,5 +109,3 @@ bootstrap-devsecops/
                 ├── k8s-tools.sh
                 ├── dotfiles_setup.sh
                 └── test-verify.sh
-
----
