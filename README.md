@@ -88,8 +88,7 @@ MIT. Use at your own risk. Contributions welcome.
 
 ---
 
-###########################################################################################################
-# For Reference - 📂 bootstrap-devsecops/ (Root Project Directory)
+## For Reference: 📂 bootstrap-devsecops/ (Root Project Directory)
 
 bootstrap-devsecops/
 ├── bootstrap-devsecops.sh          # 🔧 Main installer (Docker, ZSH, etc.)
@@ -110,4 +109,5 @@ bootstrap-devsecops/
                 ├── k8s-tools.sh
                 ├── dotfiles_setup.sh
                 └── test-verify.sh
-###########################################################################################################
+
+---
