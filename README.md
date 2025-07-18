@@ -85,3 +85,29 @@ MIT. Use at your own risk. Contributions welcome.
 - [ ] Add `.deb` packaging
 - [ ] Add Snyk security scan CI stage
 - [ ] Add `minikube` optional installer
+
+---
+
+###########################################################################################################
+# For Reference - 📂 bootstrap-devsecops/ (Root Project Directory)
+
+bootstrap-devsecops/
+├── bootstrap-devsecops.sh          # 🔧 Main installer (Docker, ZSH, etc.)
+├── k8s-tools.sh                    # ⚙️ Installs kubectl + kind (binary)
+├── dotfiles_setup.sh               # 🐚 Sets up .zshrc and plugins
+├── test-verify.sh                  # ✅ Post-install checks (Docker, ZSH, K8s)
+├── .gitlab-ci.yml                  # 🔁 CI/CD pipeline (GitLab)
+├── Makefile                        # 📦 Make targets (install, verify, package)
+├── control                         # 📄 Debian control file (for .deb builds)
+├── README.md                       # 📘 Usage guide and documentation
+└── devsecops-bootstrap_1.0.0/      # 📦 Debian packaging directory
+    ├── DEBIAN/
+    │   └── control                 # Debian metadata
+    └── usr/
+        └── local/
+            └── bin/
+                ├── bootstrap-devsecops.sh
+                ├── k8s-tools.sh
+                ├── dotfiles_setup.sh
+                └── test-verify.sh
+###########################################################################################################
