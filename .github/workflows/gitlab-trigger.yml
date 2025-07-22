@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------------
+# Description: Trigger GitLab Pipeline Directly From GitHub
+# Author: devsecops_scout
+# Last Updated: 2025-07-22
+# ------------------------------------------------------------------------
+
 name: Trigger GitLab CI
 
 on: [push, pull_request]

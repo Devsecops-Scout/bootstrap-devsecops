@@ -1,43 +1,57 @@
 #!/bin/bash
+# ------------------------------------------------------------------------
 # fix-system-maintenance.sh - Self-healing maintenance for WSL Dev environments
 # Author: devsecops_scout
+# Last Updated: 2025-07-22
+# ------------------------------------------------------------------------
 
 set -euo pipefail
+IFS=$'\n\t'
 
 LOGFILE="$HOME/system_maintenance_$(date +%F_%H-%M-%S).log"
 exec > >(tee -a "$LOGFILE") 2>&1
 
 echo "🛠️ WSL Dev Fix Maintenance Started: $(date)"
 
-# Basic system cleanup
+# ------------------------------------------------------------------------
+# 🔄 System Update & Cleanup
+# ------------------------------------------------------------------------
 echo "🔄 Updating APT sources..."
 sudo apt update || echo "⚠️ apt update failed"
 
 echo "⬆️ Upgrading system packages..."
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y || echo "⚠️ apt upgrade failed"
 
-echo "🧹 Autoremove and autoclean..."
+echo "🧹 Performing autoremove and autoclean..."
 sudo apt autoremove -y || true
 sudo apt autoclean || true
 
-# Detect and fix broken packages
+# ------------------------------------------------------------------------
+# 🧪 Fix Broken Packages
+# ------------------------------------------------------------------------
 echo "🧪 Checking for broken packages..."
 sudo dpkg --configure -a || echo "⚠️ Failed to reconfigure packages"
 sudo apt install -f -y || echo "⚠️ Dependency fix attempt failed"
 
-# Snap fix
+# ------------------------------------------------------------------------
+# 📦 Snap Package Refresh (if snap exists)
+# ------------------------------------------------------------------------
 if command -v snap &>/dev/null; then
   echo "📦 Refreshing Snap packages..."
   sudo snap refresh || echo "⚠️ Snap refresh skipped or failed"
 fi
 
-# Temp files
+# ------------------------------------------------------------------------
+# 🗂️ Cleanup Temp Files
+# ------------------------------------------------------------------------
 echo "🗂️ Cleaning stale temp files..."
 sudo find /tmp -type f -atime +5 -delete || true
 sudo find /var/tmp -type f -atime +5 -delete || true
 
-# Fix Docker permission (common WSL issue)
-if groups $USER | grep -q docker; then
+# ------------------------------------------------------------------------
+# 🐳 Docker Group Permissions Fix (common in WSL)
+# ------------------------------------------------------------------------
+if groups "$USER" | grep -q docker; then
   echo "🐳 Docker group OK"
 else
   echo "🐳 Adding $USER to docker group..."
@@ -45,18 +59,22 @@ else
   echo "⚠️ Restart terminal to apply Docker group change"
 fi
 
-# ZSH & Oh My Zsh
-if [ -d "$HOME/.oh-my-zsh" ]; then
+# ------------------------------------------------------------------------
+# 🌀 Oh My Zsh Fixes
+# ------------------------------------------------------------------------
+if [[ -d "$HOME/.oh-my-zsh" ]]; then
   echo "🌀 Fixing Oh My Zsh plugins/themes..."
 
-  omz update || echo "⚠️ Oh My Zsh update failed"
+  if command -v omz &>/dev/null; then
+    omz update || echo "⚠️ Oh My Zsh update failed"
+  fi
 
   for plugin in "$HOME/.oh-my-zsh/custom/plugins/"*/; do
-    [ -d "$plugin/.git" ] && git -C "$plugin" pull --quiet
+    [[ -d "$plugin/.git" ]] && git -C "$plugin" pull --quiet
   done
 
   for theme in "$HOME/.oh-my-zsh/custom/themes/"*/; do
-    [ -d "$theme/.git" ] && git -C "$theme" pull --quiet
+    [[ -d "$theme/.git" ]] && git -C "$theme" pull --quiet
   done
 
   echo "🧹 Clearing stale Zsh comp cache..."
@@ -65,7 +83,9 @@ else
   echo "⚠️ Oh My Zsh not installed. Skipping shell fixes."
 fi
 
-# Final check
+# ------------------------------------------------------------------------
+# 🖥️ Final Check
+# ------------------------------------------------------------------------
 echo "🖥️ Uptime: $(uptime -p)"
 echo "📁 Disk Usage:"
 df -h --output=source,size,used,avail,pcent,target | grep -E '^Filesystem|^/dev/'
