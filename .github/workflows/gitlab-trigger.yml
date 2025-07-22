@@ -1,0 +1,14 @@
+name: Trigger GitLab CI
+
+on: [push, pull_request]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger GitLab Pipeline
+        uses: appleboy/gitlab-ci-action@v1.3.0
+        with:
+          host: "https://gitlab.com"
+          token: ${{ secrets.TOKEN }}
+          project_id: "71770501"
