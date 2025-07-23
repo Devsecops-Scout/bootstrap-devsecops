@@ -1,0 +1,44 @@
+# 🔐 Ignore CodeQL bundles and other large tools
+tools/codeql.zip*
+tools/codeql/
+tools/*.zip
+tools/*.tar.gz
+tools/*.jar
+tools/*.sha256
+tools/*.exe
+
+# 🧹 Ignore all binaries and temporary files
+*.exe
+*.bin
+*.dll
+*.so
+*.dylib
+
+# 📦 Ignore package archives
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+
+# 🔍 Ignore logs and debugging output
+*.log
+*.out
+.env
+
+# 🏗️ Build and dependency directories
+node_modules/
+dist/
+build/
+target/
+venv/
+__pycache__/
+
+# 🛠️ OS/Editor specific
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.bak

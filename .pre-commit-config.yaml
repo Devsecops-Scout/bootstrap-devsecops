@@ -1,0 +1,15 @@
+# ----------------------------------------------------------------------------
+# pre-commit YAML Configuration for Secure Repo Hygiene
+# Author: Devsecops-Scout
+# Last Updated: 2025-07-23
+# ----------------------------------------------------------------------------
+
+repos:
+  - repo: local
+    hooks:
+      - id: block-large-and-binary-files
+        name: Prevent Large or Risky Binary Commits
+        entry: bash scripts/pre-commit-blocker.sh
+        language: system
+        types: [file]
+        verbose: true
